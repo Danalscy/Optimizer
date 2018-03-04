@@ -5,6 +5,7 @@
  */
 package optimizer.gui;
 
+import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,6 +13,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import optimizer.Optimizer;
+import optimizer.datastructure.Connection;
+import optimizer.datastructure.Node;
 
 /**
  *
@@ -46,6 +50,38 @@ public class ExampleFXClass extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public void showWindow(Optimizer aThis) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void showPossibleNodes(ArrayList<Node> possibleNodes) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void showPossibleConnections(ArrayList<Connection> possibleConnections) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void showPossibleTasks(ArrayList<String> possibleTasks) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void dehighlightAllNodes() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void highlightNode(Node activeNode) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void removeTask(String get) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void showPath(ArrayList<Node> first, ArrayList<Connection> second) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

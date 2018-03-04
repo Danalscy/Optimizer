@@ -3,24 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package optimizer.logic;
+package optimizer.datastructure;
 
 import java.util.ArrayList;
-import optimizer.datastructure.Connection;
-import optimizer.datastructure.Node;
-import optimizer.datastructure.Pair;
 
 /**
  *
  * @author adas
  */
-public class ExampleLogicClass {
+public class Pair<E, K> {
 
-    public Pair<ArrayList<Node>, ArrayList<Connection>> getPath(ArrayList<Node> nodesOnMap, ArrayList<Connection> connectionsOnMap, ArrayList<String> tasks, Node activeNode, int i) {
+    public ArrayList<Node> getFirst() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public Pair<ArrayList<Node>, ArrayList<Connection>> randomizeMap(ArrayList<Node> nodesOnMap, ArrayList<Connection> connectionsOnMap) {
+    public ArrayList<Connection> getSecond() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
