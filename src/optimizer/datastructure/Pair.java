@@ -5,20 +5,29 @@
  */
 package optimizer.datastructure;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author adas
  */
-public class Pair<E, K> {
+public class Pair<E1, E2> {
 
-    public ArrayList<Node> getFirst() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private E1 first;
+    private E2 second;
+    
+    public E1 getFirst() {
+        return this.first;
     }
 
-    public ArrayList<Connection> getSecond() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public E2 getSecond() {
+        return this.second;
+    }
+
+    public void setFirst(E1 first) {
+        this.first = first;
+    }
+
+    public void setSecond(E2 second) {
+        this.second = second;
     }
     
 }

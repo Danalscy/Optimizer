@@ -1,0 +1,49 @@
+{
+  "nodes": [
+    {
+      "name": "kwiaciarnia",
+      "time_required": 120,
+      "time_open": 360,
+      "time_close": 1140
+    },
+    {
+      "name": "sklep spozywczy",
+      "time_required": 30,
+      "time_open": 420,
+      "time_close": 1080
+      
+    },
+    {
+      "name": "szkola",
+      "time_required": 300,
+      "time_open": 480,
+      "time_close": 960
+    },
+    {
+      "name": "muzeum",
+      "time_required": 240,
+      "time_open": 600,
+      "time_close": 840
+    }
+  ],
+  "connections": [
+    {
+      "name": "ulica 1000m",
+      "time_required": 15,
+      "time_open": 0,
+      "time_close": 1440
+    },
+    {
+      "name": "ulica 500m",
+      "time_required": 7,
+      "time_open": 0,
+      "time_close": 1440
+    },
+    {
+      "name": "metro 2000m",
+      "time_required": 15,
+      "time_open": 240,
+      "time_close": 1380
+    }
+  ]
+}
