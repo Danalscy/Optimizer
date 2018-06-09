@@ -11,12 +11,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import optimizer.datastructure.Connection;
 import optimizer.datastructure.Node;
 import optimizer.datastructure.Pair;
-import optimizer.gui.ExampleFXClass;
+import optimizer.gui.View;
 import optimizer.logic.ExampleLogicClass;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -27,36 +33,50 @@ import org.json.simple.parser.ParseException;
  *
  * @author adas
  */
-public class Optimizer {
+public class Optimizer extends Application {
 
-    private final ExampleFXClass gui;
-    private final ExampleLogicClass logic;
-    private ArrayList<Node> nodesOnMap;
-    private ArrayList<Connection> connectionsOnMap;
-    private ArrayList<String> tasks;
+    private View gui = null;
+    private ExampleLogicClass logic;
+    private ArrayList<Node> nodesOnMap = new ArrayList<>();
+    private ArrayList<Connection> connectionsOnMap = new ArrayList<>();
+    private ArrayList<String> tasks = new ArrayList<>();
     private Node activeNode;
     
-    public Optimizer(){
+    public Optimizer() {
         
-        gui = new ExampleFXClass();
-        logic = new ExampleLogicClass();
+        //logic = new ExampleLogicClass();
         
     }
     
     public static void main(String[] args) {
                 
-        Pair<ArrayList<Node>, ArrayList<Connection>> pair = loadMap("map");
-        saveMap(pair.getFirst(), pair.getSecond(), "copy");
-        /*Optimizer optimizer = new Optimizer();
-        optimizer.run();*/
+        launch();
       
+    }
+    
+    @Override
+    public void start(Stage primaryStage) throws IOException {
+
+        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        primaryStage.setTitle("Systemy");
+        primaryStage.setScene(new Scene(root, 300, 300));
+        primaryStage.show();
+    }
+
+    public void initialize(View gui){
+        
+        this.gui = gui;
+        gui.showPossibleNodes(readPossibleNodes());
+        gui.showPossibleConnections(readPossibleConnections());
+        gui.showPossibleTasks(getPossibleTasks(readPossibleNodes()));
+        
     }
     
     public ArrayList<Node> addNewNode(Node node){
         nodesOnMap.add(node);
+        //System.out.println(nodesOnMap);
         return nodesOnMap;
     }
-    
     public ArrayList<Node> removeNode(Node node){
         nodesOnMap.remove(node);
         return nodesOnMap;
@@ -72,7 +92,7 @@ public class Optimizer {
         return connectionsOnMap;
     }
     
-    public static Pair<ArrayList<Node>, ArrayList<Connection>> loadMap(String filename){
+    /*public static Pair<ArrayList<Node>, ArrayList<Connection>> loadMap(String filename){
         Iterator<JSONObject> nodesIterator = getJSONIterator(filename, "nodes");
         Iterator<JSONObject> connectionsIterator = getJSONIterator(filename, "connections");
         
@@ -112,7 +132,7 @@ public class Optimizer {
         readyPair.setFirst(nodes);
         readyPair.setSecond(connections);
         return readyPair;
-    }
+    }*/
     
     public static boolean saveMap(ArrayList<Node> nodes, ArrayList<Connection> connections, String filename){
         
@@ -206,19 +226,7 @@ public class Optimizer {
         return setActivePoint(nodesOnMap.get(0));
     }
 
-    private void run() {
-        ArrayList<Node> possibleNodes = readPossibleNodes();
-        ArrayList<Connection> possibleConnections = readPossibleConnections();
-        ArrayList<String> possibleTasks = getPossibleTasks(possibleNodes);
-        
-        gui.showWindow(this);
-        
-        gui.showPossibleNodes(possibleNodes);
-        gui.showPossibleConnections(possibleConnections);
-        gui.showPossibleTasks(possibleTasks);  
-    }
-
-    private ArrayList<Node> readPossibleNodes() {
+    public ArrayList<Node> readPossibleNodes() {
 
         ArrayList<Node> nodes = new ArrayList<>();
         Iterator<JSONObject> iterator = getJSONIterator("elements", "nodes");
@@ -252,8 +260,8 @@ public class Optimizer {
                 (Long)object.get("time_open"),
                 (Long)object.get("time_close"),
                 false,
-                (long)0,
-                (long)0
+                null,
+                null
             );
             connections.add(connection);
         }
@@ -308,6 +316,20 @@ public class Optimizer {
                 activeNode,
                 0);//Te zero tu siedzi bo jeszcze tryby szukania ścieżek trzeba wymyślić
         
-        gui.showPath(path.getFirst(), path.getSecond());
+        //gui.showPath(path.getFirst(), path.getSecond());
+    }
+    
+    public ArrayList<Node> getNodesOnMap(){
+        return nodesOnMap;
+    }
+    public ArrayList<Connection> getConnectionsOnMap(){
+        return connectionsOnMap;
+    }
+    public ArrayList<String> getTasks(){
+        return tasks;
+    }
+    public void reset(){
+        nodesOnMap = new ArrayList<>();
+        connectionsOnMap = new ArrayList<>();
     }
 }

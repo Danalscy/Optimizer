@@ -5,13 +5,14 @@
  */
 package optimizer.datastructure;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
  *
  * @author adas
  */
-public class Node {
+public class Node implements Comparable{
 
     @Override
     public String toString() {
@@ -122,15 +123,31 @@ public class Node {
     public Long getY() {
         return y;
     }
-
+    public boolean isVisited(){
+        return visited;
+    }
+    public void setVisited(boolean bool){
+        this.visited = bool;
+    }
+    public int whatColor(){
+        return color;
+    }
+    public void setColor(int color){
+        this.color = color;
+    }
     private String name;
     private Long timeRequired;
     private Long timeOpen;
     private Long timeClose;
     private boolean open;
+    private boolean visited;
+    private int color;
     private Long x;
     private Long y;
-    
+    public ArrayList<Connection> adjacencies;
+    public ArrayList<Connection> adjacencies_tasked;
+    public double minDistance = Double.POSITIVE_INFINITY;
+    public Node previous;
     public Node(String name, Long timeRequired, Long timeOpen, Long timeClose, Long x, Long y, boolean open) {
         
         this.name = name;
@@ -140,7 +157,15 @@ public class Node {
         this.open = open;
         this.x = x;
         this.y = y;
-        
+        this.color=-1;
+        this.adjacencies = new ArrayList<>();
+        this.adjacencies_tasked = new ArrayList<>();
     }
+
+    @Override
+    public int compareTo(Object o) {
+         return Integer.compare(this.hashCode(), o.hashCode());
+    }
+
     
 }

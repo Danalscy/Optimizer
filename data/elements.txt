@@ -8,11 +8,46 @@
     },
     {
       "name": "sklep spozywczy",
+      "time_required": 10,
+      "time_open": 420,
+      "time_close": 1080     
+    },
+	{
+      "name": "dom",
+      "time_required": 0,
+      "time_open": 0,
+      "time_close": 0   
+    },
+	{
+      "name": "supermarket",
       "time_required": 30,
       "time_open": 420,
-      "time_close": 1080
-      
+      "time_close": 1080     
     },
+	{
+      "name": "kino",
+      "time_required": 240,
+      "time_open": 0,
+      "time_close": 0   
+    },	
+	{
+      "name": "przystanek",
+      "time_required": 7,
+      "time_open": 420,
+      "time_close": 1080     
+    },
+	{
+      "name": "bar",
+      "time_required": 20,
+      "time_open": 0,
+      "time_close": 0   
+    },	
+	{
+      "name": "restauracja",
+      "time_required": 40,
+      "time_open": 0,
+      "time_close": 0   
+    },	
     {
       "name": "szkola",
       "time_required": 300,
@@ -28,20 +63,32 @@
   ],
   "connections": [
     {
-      "name": "ulica 1000m",
+      "name": "ulica 15minut",
       "time_required": 15,
       "time_open": 0,
       "time_close": 1440
     },
     {
-      "name": "ulica 500m",
+      "name": "ulica 7minut",
       "time_required": 7,
       "time_open": 0,
       "time_close": 1440
     },
+	{
+      "name": "ulica 30minut",
+      "time_required": 30,
+      "time_open": 0,
+      "time_close": 1440
+    },
+	{
+      "name": "broken",
+      "time_required": 30,
+      "time_open": 0,
+      "time_close": 1440
+    },
     {
-      "name": "metro 2000m",
-      "time_required": 15,
+      "name": "metro 10minut",
+      "time_required": 10,
       "time_open": 240,
       "time_close": 1380
     }

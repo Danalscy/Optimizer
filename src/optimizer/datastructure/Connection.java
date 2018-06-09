@@ -16,6 +16,11 @@ public class Connection {
     private String name;
 
     @Override
+    public String toString() {
+        return "Connection: " + this.attach1.getName() + " - " + this.attach2.getName() + " Value: " + this.timeRequired;
+    }
+    
+    @Override
     public int hashCode() {
         int hash = 5;
         hash = 43 * hash + Objects.hashCode(this.name);
@@ -84,27 +89,27 @@ public class Connection {
         this.open = open;
     }
 
-    public void setAttach1(Long attach1) {
+    public void setAttach1(Node attach1) {
         this.attach1 = attach1;
     }
 
-    public void setAttach2(Long attach2) {
+    public void setAttach2(Node attach2) {
         this.attach2 = attach2;
     }
     private Long timeRequired;
     private Long timeOpen;
     private Long timeClose;
     private boolean open;
-    private Long attach1;
-    private Long attach2;
+    private Node attach1;
+    private Node attach2;
     
-    public Connection(String name, Long timeRequired, Long timeOpen, Long timeClose, boolean open, Long attach1, Long attach2) {
+    public Connection(String name, Long timeRequired, Long timeOpen, Long timeClose, boolean open, Node attach1, Node attach2) {
         
         this.name = name;
         this.timeRequired = timeRequired;
         this.timeOpen = timeOpen;
         this.timeClose = timeClose;
-        this.open = open;
+        this.open = true;
         this.attach1 = attach1;
         this.attach2 = attach2;
         
@@ -130,12 +135,20 @@ public class Connection {
         return open;
     }
 
-    public Long getAttach1() {
+    public Node getAttach1() {
         return attach1;
     }
 
-    public Long getAttach2() {
+    public Node getAttach2() {
         return attach2;
+    }
+    
+    public Node getNeighbour(Node nodeIndex) {
+        if (this.attach1 == nodeIndex) {
+            return getAttach2();
+        } else {
+            return getAttach1();
+        }
     }
     
 }
