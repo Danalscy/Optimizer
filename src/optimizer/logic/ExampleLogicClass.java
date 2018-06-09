@@ -31,6 +31,7 @@ public class ExampleLogicClass {
         connectionsOnMap = connections;
     }
      */
+    Node startNode;
     List<ArrayList<Node>> permutations = new ArrayList<>();
     public void check(ArrayList<Node> nodes, ArrayList<Connection> connections) {
         System.out.println(nodes);
@@ -87,12 +88,9 @@ public class ExampleLogicClass {
     }
 
     public Node getNode(ArrayList<Node> nodes, Node v) {
-        for (Node n : nodes) {
-            if (v.getName().equals(n.getName())) {
-                return n;
-            }
-        }
-        return null;
+        int index = nodes.indexOf(v);
+        Node node = nodes.get(index);
+        return node;
     }
 
     public void resetVisited(ArrayList<Node> nodes) {
@@ -142,6 +140,7 @@ public class ExampleLogicClass {
     }
 
     public Pair<ArrayList<Node>, ArrayList<Connection>> getPath(ArrayList<Node> nodesOnMap, ArrayList<Connection> connectionsOnMap, ArrayList<String> tasks, Node activeNode, int mode) {
+        this.startNode = nodesOnMap.get(0);
         ArrayList<Node> taskNodes = new ArrayList<Node>();
         ArrayList<Connection> taskConnections = new ArrayList<Connection>();
         for (Node node : nodesOnMap) {
@@ -189,7 +188,7 @@ public class ExampleLogicClass {
         permutation.add(activeNode);
         _permute(permutation, taskNodes);
         for (ArrayList<Node> l : permutations) {
-            l.add(activeNode);
+            l.add(startNode);
             printPath(l);
         }
 
@@ -257,7 +256,7 @@ public class ExampleLogicClass {
         Random r = new Random();
         for (Connection e : connectionsOnMap) {
             int game = r.nextInt(100);
-            if (game < 7) {
+            if (game < 5) {
                 e.setOpen(!e.isOpen());
             }
         }

@@ -8,8 +8,10 @@ package optimizer.gui;
 //import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,15 +25,12 @@ import optimizer.datastructure.Connection;
 import optimizer.datastructure.Node;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
-
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import optimizer.datastructure.Pair;
 import optimizer.logic.ExampleLogicClass;
 
@@ -54,6 +53,10 @@ public class View implements Initializable {
     @FXML
     TableColumn<String, String> allTasksColumn;
     @FXML
+    TableView<String> selectedTasksTable;
+    @FXML
+    TableColumn<String, String> selectedTasksColumn;
+    @FXML
     ScrollPane imageMap;
     @FXML
     BorderPane window;
@@ -69,15 +72,15 @@ public class View implements Initializable {
     ArrayList<Node> shortestPath;
     Optimizer optimizer;
     ArrayList<String> tasks;
+    ObservableList<String> selectedTask;
 
     public View() {
         this.optimizer = new Optimizer();
         this.logic = new ExampleLogicClass();
         this.shortestPath = new ArrayList<Node>();
         this.tasks = new ArrayList<String>();
-        this.tasks.add("szkola");
-        this.tasks.add("kwiaciarnia");
-        this.tasks.add("supermarket");
+        this.selectedTask = FXCollections.<String>observableArrayList();
+        //this.tasks.add("supermarket");
     }
 
     @Override
@@ -95,6 +98,18 @@ public class View implements Initializable {
             public void handle(MouseEvent event) {
                 nodesTable.getSelectionModel().select(null);
                 connectionFirstNode = null;
+            }
+        });
+        this.allTasksTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {  
+                selectedTask.add(allTasksTable.getSelectionModel().getSelectedItem());
+                System.out.println("Task to select is:" + selectedTask);
+                selectedTasksColumn.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue()));
+                selectedTasksTable.setItems(selectedTask);
+                selectedTasksTable.getColumns().addAll();
+                showSelectedTasks(selectedTask);
+                tasks = new ArrayList<String>(selectedTasksTable.getItems());
             }
         });
         this.imageMap.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -138,6 +153,13 @@ public class View implements Initializable {
         allTasksColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()));
         allTasksTable.setItems(observablePossibleTasks);
 
+    }
+
+    public void showSelectedTasks(ObservableList<String> selectedTasks) {
+        ObservableList<String> observableChoosenTasks = FXCollections.observableArrayList(selectedTasks);
+        selectedTasksColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()));
+        selectedTasksTable.setItems(observableChoosenTasks);
+        System.out.println("funckja showSelectedTasks" + selectedTasks);
     }
 
     public void addNodeOnMap(MouseEvent event) {
@@ -281,24 +303,30 @@ public class View implements Initializable {
 
     public void showPath() {
         //drawPath(shortestPath);
-        ArrayList<Node> first = optimizer.getNodesOnMap();
-        printPath(shortestPath);
-        Node visited = shortestPath.get(0);
-        drawNode(visited.getX(), visited.getY(), Color.GREEN);
-        shortestPath.remove(0);
+        if (shortestPath.size() != 0) {
+            ArrayList<Node> first = optimizer.getNodesOnMap();
+            printPath(shortestPath);
+            Node visited = shortestPath.get(0);
+            drawNode(visited.getX(), visited.getY(), Color.GREEN);
+            shortestPath.remove(0);
 
-        for (String name : tasks) {
-            if (visited.getName().equals(name)) {
-                tasks.remove(name);
-            }
+            tasks.remove(visited.getName());
         }
     }
 
     public void random() {
         ArrayList<Node> first = optimizer.getNodesOnMap();
         ArrayList<Connection> second = optimizer.getConnectionsOnMap();
+        Node activeNode;
+        if (shortestPath.size() == 0) {
+            activeNode = first.get(0);
+        } else {
+            activeNode = this.shortestPath.get(0);
+        }
+        this.shortestPath = new ArrayList<Node>();
         logic.randomizeMap(first, second);
-        Pair<ArrayList<Node>, ArrayList<Connection>> pair = logic.getPath(first, second, this.tasks, this.shortestPath.get(0), 0);
+
+        Pair<ArrayList<Node>, ArrayList<Connection>> pair = logic.getPath(first, second, this.tasks, activeNode, 0);
         this.shortestPath = pair.getFirst();
         this.shortestPath.add(first.get(0));
         displayMapWithConnectionsOnIt(optimizer.getConnectionsOnMap());

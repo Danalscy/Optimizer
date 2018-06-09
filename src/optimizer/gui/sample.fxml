@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.canvas.*?>
 
-<BorderPane fx:id="window" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="828.0" prefWidth="1023.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="optimizer.gui.View">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="828.0" prefWidth="1023.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <center>
+      <ImageView fx:id="imageMap" fitHeight="630.0" fitWidth="725.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@res/back.jpg" />
+         </image>
+      </ImageView>
+   </center>
    <top>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -27,7 +32,7 @@
    <bottom>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="startButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="95.0" text="Go" wrapText="true">
+            <Button fx:id="startButton" mnemonicParsing="false" onAction="#showPath" prefHeight="40.0" prefWidth="95.0" text="Go" wrapText="true">
                <HBox.margin>
                   <Insets left="200.0" top="10.0" />
                </HBox.margin>
@@ -37,25 +42,20 @@
                   <Insets left="343.0" top="10.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="randomButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="95.0" text="random" wrapText="true">
-               <HBox.margin>
-                  <Insets left="10.0" top="10.0" />
-               </HBox.margin>
-            </Button>
          </children>
       </HBox>
    </bottom>
    <left>
       <VBox prefHeight="628.0" prefWidth="233.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="nodesTable">
+            <TableView>
               <columns>
-                <TableColumn fx:id="nodesColumn" prefWidth="247.0" text="Węzły" />
+                <TableColumn fx:id="nodesTable" prefWidth="247.0" text="Węzły" />
               </columns>
             </TableView>
             <TableView fx:id="connectionsTable">
               <columns>
-                <TableColumn fx:id="connectionsColumn" prefWidth="248.0" text="Połączenia" />
+                <TableColumn prefWidth="248.0" text="Połączenia" />
               </columns>
             </TableView>
          </children>
@@ -64,16 +64,23 @@
    <right>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="allTasksTable" prefHeight="407.0" prefWidth="290.0">
-              <columns>
-                <TableColumn fx:id="allTasksColumn" prefWidth="289.0" text="Możliwe zadania" />
-              </columns>
-            </TableView>
-            <TableView fx:id="selectedTasksTable" prefHeight="408.0" prefWidth="290.0">
-              <columns>
-                <TableColumn fx:id="selectedTasksColumn" prefWidth="289.0" text="Wybrane zadania" />
-              </columns>
-            </TableView>
+            <HBox prefHeight="478.0" prefWidth="290.0">
+               <children>
+                  <TableView>
+                    <columns>
+                      <TableColumn fx:id="allTasksTable" prefWidth="144.0" text="Możliwe zadania" />
+                    </columns>
+                  </TableView>
+                  <TableView>
+                    <columns>
+                      <TableColumn fx:id="selectedTasksTable" prefWidth="144.0" text="Wybrane zadania" />
+                    </columns>
+                     <HBox.margin>
+                        <Insets bottom="70.0" top="70.0" />
+                     </HBox.margin>
+                  </TableView>
+               </children>
+            </HBox>
             <HBox>
                <children>
                   <TextField fx:id="inputTaskField" prefHeight="0.0" prefWidth="187.0">
@@ -104,11 +111,4 @@
          </children>
       </VBox>
    </right>
-   <center>
-      <ScrollPane fx:id="imageMap" prefHeight="${imageMap.parent.height}" prefWidth="${imageMap.parent.width}" BorderPane.alignment="CENTER">
-        <content>
-            <Canvas fx:id="map" height="${map.parent.height}" width="${map.parent.width}" />
-         </content>
-      </ScrollPane>
-   </center>
 </BorderPane>
